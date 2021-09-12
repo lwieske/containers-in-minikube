@@ -1,0 +1,24 @@
+name: Convert README.ipynb to README.md
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install nbconvert
+        run: pip3 install nbconvert
+  
+      - name: Convert ipynb files to html delete
+        run: jupyter nbconvert README.ipynb --to markdown 
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Generated README.md
